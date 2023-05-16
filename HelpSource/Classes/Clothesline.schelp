@@ -1,0 +1,69 @@
+CLASS::Clothesline
+summary::Timeline for Code
+categories::live coding
+
+DESCRIPTION::
+When compoising larger pieces out of many smaller programs, one is often drawn towards recording the elements and arranging the piece in a timeline of a digital audio workstation. The class Clothesline gives a simple way to schedule code in a timeline, each with beginning and end. It has a GUI for simple navigation. This is all, it has no further controls, no dragging, no convenience. It is experimental and may change.
+
+The code files have a specific format, which can be found in the examples folder.
+
+code::
+// put up a new clothesline and schedule some items
+(
+~player = Clothesline.new;
+~player.addAllScores("../../examples/".resolveRelative);
+
+~player.schedAllArrays([
+	[\this, 1.0, 4],
+	[\more, 2.5, 5.0],
+	[\more, 7.5, 8.0, \more2], // alias
+	[\that, 3.0, 4.5],
+	[\those, 0.5, 3.0],
+	[\more, 3.5, 8.0, \more3], // alias
+	[\cult_of_q, 0.5, 2.0] + 4 // addition moves the item
+] * 3); // multiplication stretches the line
+)
+
+
+// now we can jump around in it
+~player.jumpTo(2.0);
+~player.jumpTo(4.2);
+~player.jumpTo(1.0);
+
+// or play it from the beginning
+~player.play(0.0);
+
+// visualize it
+ClotheslineGUI(~player, "Wäscheleine");
+
+::
+
+CLASSMETHODS::
+
+method::new
+Return a new instance. Instances can share the same code files. The current environment is captured now and can be accessed from the code files.
+
+
+INSTANCEMETHODS::
+
+method::addScore
+Register a code file from a given path.
+
+argument:: path
+The full path (use code::resolveRelative::) for relative paths.
+
+argument::callInContext
+If true, make a persistent separate environment for each code file, which has the captured environment as parent. This allows you to access global data, but also use the local environment in each code without messing up other environments.
+
+method::addAllScores
+Register all code files from a given path. All files that end with the code::fileNameEnding:: (default is code::-score::) are registered.
+
+argument::callInContext
+See addScore.
+
+
+method::schedAllArrays
+Take an array of arrays, each of the format code::[name, start-time, end-time]:: and schedule the code files that come with the name as a filename (without the code::fileNameEnding::).
+
+
+
