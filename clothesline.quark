@@ -1,7 +1,7 @@
 (
 	\name: 			"clothesline",
 	\path: 			"clothesline",
-	\summary:		"A timeline to hang code on",
+	\summary:		"A timeline to hang code onto",
 	\author: 		"Julian Rohrhuber",
 	\since: 		"2022",
 	\version:		"0.1",
