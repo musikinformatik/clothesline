@@ -293,7 +293,7 @@ Clothesline {
 	}
 
 	lastTime {
-		 ^max(this.lastEndTime ? 0, defaultBreakpoints.last)
+		^max(this.lastEndTime ? 0, defaultBreakpoints.last)
 	}
 
 	eventIsScheduled { |event|
@@ -343,6 +343,7 @@ Clothesline {
 
 	sortEvents { |events, sortKey, default = inf|
 		var f = { |e| e[sortKey] ? default };
+		if(events.isNil) { ^nil };
 		^events.sort { |a, b| f.(a) < f.(b) }
 	}
 
